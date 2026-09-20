@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="az">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>Da Capo | Abbina l'Alfabeto</title>
+<style>
+:root{--g:#0b4f35;--g2:#176548;--cream:#fbf7ec;--gold:#d9b95b;--ink:#17362b;--muted:#718078;--red:#b93636}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--cream);color:var(--ink);font-family:Arial,Helvetica,sans-serif}
+body{padding:14px;background:radial-gradient(circle at 10% 8%,rgba(217,185,91,.13),transparent 22%),radial-gradient(circle at 90% 88%,rgba(11,79,53,.09),transparent 24%),var(--cream)}
+button{-webkit-appearance:none;appearance:none;font:inherit;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+.app{max-width:760px;margin:auto}.brand{text-align:center}.tree{font-size:36px}.brand h1{margin:0;font:700 29px Georgia,serif;color:var(--g)}
+.brand small{display:block;margin-top:3px;letter-spacing:2px;color:var(--g2);font-size:10px;text-transform:uppercase}
+.head{text-align:center;margin:16px 0 10px}.head h2{margin:0;font:700 23px Georgia,serif;color:var(--g)}
+.head p{margin:6px auto 0;max-width:590px;color:var(--muted);font-size:13px;line-height:1.4}
+.panel{background:rgba(255,255,255,.82);border:1px solid rgba(11,79,53,.12);border-radius:22px;padding:13px;box-shadow:0 12px 30px rgba(25,55,42,.08)}
+.top{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px}
+.levels{display:flex;gap:6px}.level{border:1px solid #d9e2dc;background:#fff;color:var(--g);border-radius:999px;padding:8px 10px;font-size:11px;font-weight:700}
+.level.active{background:var(--g);color:#fff;border-color:var(--g)}.stats{text-align:right;font-size:11px;color:var(--muted)}.stats b{color:var(--g)}
+.letters{display:grid;grid-template-columns:repeat(7,1fr);gap:7px;margin-bottom:12px}
+.slot{min-height:92px;border:2px dashed #b9cbbf;background:#f9fcfa;border-radius:15px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:5px;transition:.2s}
+.slot .L{font:700 31px Georgia,serif;color:var(--g)}.slot .placed{font:700 9px Georgia,serif;color:var(--g);margin-top:3px;text-align:center}
+.slot.good{border-style:solid;border-color:#86b59a;background:#edf6f0}.slot.bad{border-color:var(--red);background:#fff0f0;animation:shake .28s}
+@keyframes shake{25%{transform:translateX(-4px)}50%{transform:translateX(4px)}75%{transform:translateX(-3px)}}
+.deckTitle{text-align:center;color:var(--muted);font-size:11px;margin:3px 0 8px}
+.deck{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.card{position:relative;border:0;background:transparent;padding:0;aspect-ratio:1/1.02;perspective:800px;cursor:pointer}
+.inner{position:absolute;inset:0;transition:transform .36s;transform-style:preserve-3d}.card.open .inner{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;border-radius:15px;display:flex;align-items:center;justify-content:center;backface-visibility:hidden;-webkit-backface-visibility:hidden;box-shadow:0 5px 13px rgba(21,55,40,.10)}
+.back{background:var(--g);color:#fff;flex-direction:column}.back .sprout{font-size:27px}.back span{font:700 9px Georgia,serif;margin-top:2px}
+.front{transform:rotateY(180deg);background:#fff;border:1px solid #dfe7e1;flex-direction:column;padding:6px;text-align:center}
+.ico{font-size:27px}.w{font:700 11px Georgia,serif;color:var(--g);margin-top:4px;word-break:break-word}.audioBtn{margin-top:5px;width:25px;height:25px;border-radius:50%;background:#eef5f0;color:var(--g);display:flex;align-items:center;justify-content:center;font-size:13px}
+.card.open{touch-action:none}.card.done{visibility:hidden;pointer-events:none}
+.message{text-align:center;min-height:25px;margin-top:9px;font:700 13px Georgia,serif;color:var(--g)}
+.message.error{color:var(--red)}.progress{height:5px;background:#e4e9e5;border-radius:99px;overflow:hidden;margin-top:7px}.fill{height:100%;width:0;background:var(--gold);transition:width .25s}
+.actions{text-align:center;margin-top:10px}.reset{border:1px solid rgba(11,79,53,.22);background:#fff;color:var(--g);border-radius:13px;padding:10px 14px;font-size:12px;font-weight:700}
+.footer{text-align:center;margin:13px 0 3px;font:italic 13px Georgia,serif;color:var(--g)}
+@media(max-width:520px){body{padding:9px}.panel{padding:9px}.letters{gap:4px}.slot{min-height:76px;border-radius:12px}.slot .L{font-size:26px}.slot .placed{font-size:7.5px}.deck{gap:6px}.face{border-radius:12px}.ico{font-size:23px}.w{font-size:9px}.level{padding:7px 8px;font-size:9px}}
+</style>
+</head>
+<body>
+<main class="app">
+<header class="brand"><div class="tree">🌳</div><h1>Da Capo</h1><small>Guided Self-Study Membership</small></header>
+<section class="head"><h2>Abbina l'Alfabeto</h2><p>Söz kartını aç, sonra onu uyğun hərfin üzərinə sürüşdür. Səhv seçim qırmızı xəbərdarlıq verəcək.</p></section>
+<section class="panel">
+<div class="top"><div class="levels">
+<button class="level active" data-level="0">Livello 1</button><button class="level" data-level="1">Livello 2</button><button class="level" data-level="2">Livello 3</button>
+</div><div class="stats">Düzgün: <b id="score">0 / 7</b></div></div>
+<div class="letters" id="letters"></div>
+<div class="deckTitle">Kartı aç → sözü hərfin üzərinə sürüşdür</div>
+<div class="deck" id="deck"></div>
+<div class="progress"><div class="fill" id="fill"></div></div>
+<div class="message" id="message"></div>
+<div class="actions"><button class="reset" id="reset">↻ Yenidən başla</button></div>
+</section>
+<div class="footer">Scopri, abbina, impara. 🌱</div>
+</main>
+<script>
+(function(){
+var all=[
+{L:"A",w:"AEREO",i:"✈️"},{L:"B",w:"BAMBINO",i:"👦"},{L:"C",w:"CAFFÈ",i:"☕"},{L:"D",w:"DELFINO",i:"🐬"},{L:"E",w:"ELEFANTE",i:"🐘"},{L:"F",w:"FIORE",i:"🌷"},{L:"G",w:"GATTO",i:"🐱"},
+{L:"H",w:"HOTEL",i:"🏨"},{L:"I",w:"ISOLA",i:"🏝️"},{L:"L",w:"LIBRO",i:"📖"},{L:"M",w:"MELA",i:"🍎"},{L:"N",w:"NAVE",i:"🚢"},{L:"O",w:"OMBRELLO",i:"☂️"},{L:"P",w:"PIZZA",i:"🍕"},
+{L:"Q",w:"QUADERNO",i:"📓"},{L:"R",w:"ROSA",i:"🌹"},{L:"S",w:"SOLE",i:"☀️"},{L:"T",w:"TAVOLO",i:"🪑"},{L:"U",w:"UVA",i:"🍇"},{L:"V",w:"VINO",i:"🍷"},{L:"Z",w:"ZAINO",i:"🎒"}];
+var levels=[all.slice(0,7),all.slice(7,14),all.slice(14,21)],level=0,score=0,dragCard=null,startX=0,startY=0,moved=false,totalCorrectFirstTry=0,totalAnswered=0,failed={};
+
+function shuffle(a){var i,j,t;for(i=a.length-1;i>0;i--){j=Math.floor(Math.random()*(i+1));t=a[i];a[i]=a[j];a[j]=t}return a}
+function build(){
+ score=0;document.getElementById("score").textContent="0 / 7";document.getElementById("fill").style.width="0%";setMsg("");
+ var ls=document.getElementById("letters"),dk=document.getElementById("deck");ls.innerHTML="";dk.innerHTML="";
+ var set=levels[level],i;
+ for(i=0;i<set.length;i++){
+  var s=document.createElement("div");s.className="slot";s.setAttribute("data-letter",set[i].L);
+  s.innerHTML='<div class="L">'+set[i].L+'</div><div class="placed"></div>';ls.appendChild(s);
+ }
+ var cards=set.slice(0);shuffle(cards);
+ for(i=0;i<cards.length;i++)dk.appendChild(makeCard(cards[i]));
+}
+function speakItalian(word){
+ if(!window.speechSynthesis || !window.SpeechSynthesisUtterance){setMsg("Bu brauzerdə səsləndirmə dəstəklənmir.",true);return}
+ try{
+  window.speechSynthesis.cancel();
+  var u=new SpeechSynthesisUtterance(word.toLowerCase());
+  u.lang="it-IT";u.rate=0.78;u.pitch=1;
+  var vs=window.speechSynthesis.getVoices(),v=null,j;
+  for(j=0;j<vs.length;j++){if(vs[j].lang&&vs[j].lang.toLowerCase().indexOf("it")===0){v=vs[j];break}}
+  if(v)u.voice=v;
+  window.speechSynthesis.speak(u);
+ }catch(err){setMsg("Səsləndirmə başladılmadı.",true)}
+}
+function makeCard(p){
+ var b=document.createElement("button");b.type="button";b.className="card";b.setAttribute("data-letter",p.L);b.setAttribute("data-word",p.w);
+ b.innerHTML='<div class="inner"><div class="face back"><div class="sprout">🌱</div><span>DA CAPO</span></div><div class="face front"><div class="ico">'+p.i+'</div><div class="w">'+p.w+'</div><div class="audioBtn" aria-label="Sözü dinlə">🔊</div></div></div>';
+ b.addEventListener("click",function(e){
+  if(moved)return;
+  if(b.className.indexOf("open")<0){b.className+=" open";speakItalian(p.w)}
+  else if(e.target && (" "+e.target.className+" ").indexOf(" audioBtn ")>-1){speakItalian(p.w)}
+ },false);
+ b.addEventListener("touchstart",touchStart,{passive:false});b.addEventListener("touchmove",touchMove,{passive:false});b.addEventListener("touchend",touchEnd,{passive:false});
+ b.setAttribute("draggable","true");b.addEventListener("dragstart",function(e){if(b.className.indexOf("open")<0){e.preventDefault();return}dragCard=b;e.dataTransfer.setData("text/plain",p.L)},false);
+ return b;
+}
+function setMsg(t,err){var m=document.getElementById("message");m.textContent=t;m.className=err?"message error":"message"}
+function accept(card,slot){
+ if(!card||!slot)return;
+ if(card.getAttribute("data-letter")===slot.getAttribute("data-letter")){
+  var key=card.getAttribute("data-letter");
+  if(!card.getAttribute("data-scored")){
+   totalAnswered++;
+   if(!failed[key])totalCorrectFirstTry++;
+   card.setAttribute("data-scored","1");
+  }
+  slot.className="slot good";slot.getElementsByClassName("placed")[0].textContent=card.getAttribute("data-word");
+  card.className+=" done";score++;document.getElementById("score").textContent=score+" / 7";document.getElementById("fill").style.width=(score/7*100)+"%";
+  if(score===7){
+   if(level<2){
+    setMsg("Bravissimo! Livello completato. Prossimo livello… 🌱",false);
+    window.setTimeout(function(){
+      level=level+1;
+      var bs2=document.getElementsByClassName("level"),jj;
+      for(jj=0;jj<bs2.length;jj++)bs2[jj].className="level";
+      bs2[level].className="level active";
+      build();
+    },1100);
+   }else{
+    var pct=Math.round((totalCorrectFirstTry/21)*100);
+    setMsg("Risultato finale: "+totalCorrectFirstTry+" / 21 — "+pct+"% 🌳",false);
+   }
+  }else{
+   setMsg("Corretto! ✓",false);
+  }
+ }else{
+  failed[card.getAttribute("data-letter")]=true;
+  slot.className+=" bad";setMsg("Səhvdir — bir daha düşün! ✕",true);
+  window.setTimeout(function(){slot.className=slot.className.replace(" bad","");setMsg("")},750);
+ }
+}
+function slotAt(x,y){
+ var e=document.elementFromPoint(x,y);while(e&&e!==document.body){if((" "+e.className+" ").indexOf(" slot ")>-1)return e;e=e.parentNode}return null
+}
+function touchStart(e){
+ if(this.className.indexOf("open")<0)return;
+ dragCard=this;moved=false;var t=e.touches[0];startX=t.clientX;startY=t.clientY;
+}
+function touchMove(e){
+ if(!dragCard)return;var t=e.touches[0],dx=t.clientX-startX,dy=t.clientY-startY;
+ if(Math.abs(dx)>5||Math.abs(dy)>5)moved=true;
+ if(moved){e.preventDefault();dragCard.style.transform="translate("+dx+"px,"+dy+"px) scale(1.04)";dragCard.style.zIndex="50"}
+}
+function touchEnd(e){
+ if(!dragCard)return;var t=e.changedTouches[0],s=slotAt(t.clientX,t.clientY),c=dragCard;
+ c.style.transform="";c.style.zIndex="";dragCard=null;if(moved&&s)accept(c,s);
+ window.setTimeout(function(){moved=false},50);
+}
+document.addEventListener("dragover",function(e){e.preventDefault()},false);
+document.addEventListener("drop",function(e){e.preventDefault();var s=slotAt(e.clientX,e.clientY);if(s&&dragCard)accept(dragCard,s);dragCard=null},false);
+var bs=document.getElementsByClassName("level"),n;
+for(n=0;n<bs.length;n++){(function(idx){bs[idx].addEventListener("click",function(){var j;level=idx;for(j=0;j<bs.length;j++)bs[j].className="level";bs[idx].className="level active";build()},false)})(n)}
+document.getElementById("reset").addEventListener("click",function(){
+ level=0;totalCorrectFirstTry=0;totalAnswered=0;failed={};
+ var rb=document.getElementsByClassName("level"),ri;
+ for(ri=0;ri<rb.length;ri++)rb[ri].className="level";
+ rb[0].className="level active";build();
+},false);build();
+})();
+</script>
+</body></html>
