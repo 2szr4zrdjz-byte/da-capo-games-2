@@ -24,7 +24,7 @@ button{-webkit-appearance:none;appearance:none;font:inherit;touch-action:manipul
 @keyframes shake{25%{transform:translateX(-4px)}50%{transform:translateX(4px)}75%{transform:translateX(-3px)}}
 .deckTitle{text-align:center;color:var(--muted);font-size:11px;margin:3px 0 8px}
 .deck{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
-.card{position:relative;border:0;background:transparent;padding:0;aspect-ratio:1/1.02;perspective:800px;cursor:pointer}
+.card{position:relative;border:0;background:transparent;padding:0;aspect-ratio:1/1.02;perspective:800px;cursor:pointer;-webkit-user-drag:none;-webkit-user-select:none;user-select:none}
 .inner{position:absolute;inset:0;transition:transform .36s;transform-style:preserve-3d}.card.open .inner{transform:rotateY(180deg)}
 .face{position:absolute;inset:0;border-radius:15px;display:flex;align-items:center;justify-content:center;backface-visibility:hidden;-webkit-backface-visibility:hidden;box-shadow:0 5px 13px rgba(21,55,40,.10)}
 .back{background:var(--g);color:#fff;flex-direction:column}.back .sprout{font-size:27px}.back span{font:700 9px Georgia,serif;margin-top:2px}
@@ -96,7 +96,9 @@ function makeCard(p){
   else if(e.target && (" "+e.target.className+" ").indexOf(" audioBtn ")>-1){speakItalian(p.w)}
  },false);
  b.addEventListener("touchstart",touchStart,{passive:false});b.addEventListener("touchmove",touchMove,{passive:false});b.addEventListener("touchend",touchEnd,{passive:false});
- b.setAttribute("draggable","true");b.addEventListener("dragstart",function(e){if(b.className.indexOf("open")<0){e.preventDefault();return}dragCard=b;e.dataTransfer.setData("text/plain",p.L)},false);
+ var isTouch=("ontouchstart" in window)||(navigator.maxTouchPoints&&navigator.maxTouchPoints>0);
+ b.setAttribute("draggable",isTouch?"false":"true");
+ b.addEventListener("dragstart",function(e){if(isTouch){e.preventDefault();return}if(b.className.indexOf("open")<0){e.preventDefault();return}dragCard=b;e.dataTransfer.setData("text/plain",p.L)},false);
  return b;
 }
 function setMsg(t,err){var m=document.getElementById("message");m.textContent=t;m.className=err?"message error":"message"}
@@ -139,6 +141,7 @@ function slotAt(x,y){
 }
 function touchStart(e){
  if(this.className.indexOf("open")<0)return;
+ if(e.cancelable)e.preventDefault();
  dragCard=this;moved=false;var t=e.touches[0];startX=t.clientX;startY=t.clientY;
 }
 function touchMove(e){
