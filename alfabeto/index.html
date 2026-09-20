@@ -147,8 +147,17 @@ function touchMove(e){
  if(moved){e.preventDefault();dragCard.style.transform="translate("+dx+"px,"+dy+"px) scale(1.04)";dragCard.style.zIndex="50"}
 }
 function touchEnd(e){
- if(!dragCard)return;var t=e.changedTouches[0],s=slotAt(t.clientX,t.clientY),c=dragCard;
- c.style.transform="";c.style.zIndex="";dragCard=null;if(moved&&s)accept(c,s);
+ if(!dragCard)return;
+ var t=e.changedTouches[0],c=dragCard,s=null;
+ /* iOS fix: the dragged card itself sits under the finger and can hide the drop slot
+    from elementFromPoint(). Temporarily ignore the card while detecting the target. */
+ c.style.pointerEvents="none";
+ s=slotAt(t.clientX,t.clientY);
+ c.style.pointerEvents="";
+ c.style.transform="";
+ c.style.zIndex="";
+ dragCard=null;
+ if(moved&&s)accept(c,s);
  window.setTimeout(function(){moved=false},50);
 }
 document.addEventListener("dragover",function(e){e.preventDefault()},false);
