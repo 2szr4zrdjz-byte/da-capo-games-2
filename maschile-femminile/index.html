@@ -18,7 +18,7 @@ button{-webkit-appearance:none;appearance:none;font:inherit;-webkit-tap-highligh
 .prompt{text-align:center;color:var(--muted);font-size:11px;margin-top:22px;text-transform:uppercase;letter-spacing:1px}
 .wordZone{min-height:150px;display:flex;align-items:center;justify-content:center}
 .wordCard{min-width:180px;padding:21px 28px;border-radius:20px;background:#fff;border:1px solid #dce6df;box-shadow:0 8px 20px rgba(21,55,40,.10);font:700 34px Georgia,serif;color:var(--g);text-align:center;cursor:grab;touch-action:none;-webkit-user-drag:none;-webkit-user-select:none;user-select:none;position:relative}
-.wordCard.dragging{z-index:100;opacity:.95;cursor:grabbing}.wordCard.ok{animation:pop .45s ease}.wordAz{text-align:center;margin-top:9px;font:italic 15px Georgia,serif;color:var(--g2)}
+.wordCard.dragging{z-index:100;opacity:.95;cursor:grabbing}.wordCard.ok{animation:pop .45s ease}.wordAz{text-align:center;margin-top:9px;font:italic 15px Georgia,serif;color:var(--g2)}.audioBtn{display:block;margin:10px auto 0;border:1px solid #cbdcd1;background:#eef5f0;color:var(--g);border-radius:999px;min-width:44px;min-height:44px;padding:8px 13px;font-weight:700;cursor:pointer}
 @keyframes pop{45%{transform:scale(1.1)}}
 .targets{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:5px}
 .target{min-height:128px;border:2px dashed rgba(23,54,43,.24);border-radius:20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;color:var(--ink);cursor:pointer;transition:.18s}.target[data-g="m"]{background:#dceeff;border-color:#83b7e8}.target[data-g="f"]{background:#ffe1ec;border-color:#eaa0bd}
@@ -43,7 +43,7 @@ button{-webkit-appearance:none;appearance:none;font:inherit;-webkit-tap-highligh
 <div class="game" id="game">
  <div class="top"><div class="pill">I SOSTANTIVI</div><div class="stats">Söz: <b id="counter">1 / 15</b></div></div>
  <div class="prompt">Che genere è?</div>
- <div class="wordZone"><div><div class="wordCard" id="wordCard">mare</div><div class="wordAz" id="wordAz">dəniz</div></div></div>
+ <div class="wordZone"><div><div class="wordCard" id="wordCard">mare</div><div class="wordAz" id="wordAz">dəniz</div><button type="button" class="audioBtn" id="audioBtn" aria-label="Sözü dinlə">🔊 Dinlə</button></div></div>
  <div class="targets">
    <button type="button" class="target" id="mTarget" data-g="m"><div class="symbol">♂</div><div class="label">Maschile</div></button>
    <button type="button" class="target" id="fTarget" data-g="f"><div class="symbol">♀</div><div class="label">Femminile</div></button>
@@ -74,10 +74,10 @@ var idx=0,firstCorrect=0,failed={},locked=false,drag=null,dx=0,dy=0;
 var card=document.getElementById("wordCard"),m=document.getElementById("mTarget"),f=document.getElementById("fTarget");
 function $(id){return document.getElementById(id)}
 function setMsg(t,err){$("message").textContent=t;$("message").className=err?"message error":"message"}
-function speak(t){if(!window.speechSynthesis||!window.SpeechSynthesisUtterance)return;try{speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(t);u.lang="it-IT";u.rate=.78;var vs=speechSynthesis.getVoices(),j;for(j=0;j<vs.length;j++){if(vs[j].lang&&vs[j].lang.toLowerCase().indexOf("it")===0){u.voice=vs[j];break}}speechSynthesis.speak(u)}catch(e){}}
+function speak(t){if(!window.speechSynthesis||!window.SpeechSynthesisUtterance){setMsg("Bu brauzerdə səs dəstəklənmir.",true);return}try{speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(t);u.lang="it-IT";u.rate=.78;u.pitch=1;var vs=speechSynthesis.getVoices(),j;for(j=0;j<vs.length;j++){if(vs[j].lang&&vs[j].lang.toLowerCase().indexOf("it")===0){u.voice=vs[j];break}}speechSynthesis.speak(u)}catch(e){setMsg("Səsi başlatmaq mümkün olmadı.",true)}}
 function render(){locked=false;setMsg("");m.className="target";f.className="target";card.className="wordCard";card.textContent=items[idx].w;$("wordAz").textContent=items[idx].az;$("counter").textContent=(idx+1)+" / "+items.length;$("translation").textContent="";$("translation").className="translation";$("fill").style.width=(idx/items.length*100)+"%"}
 function attempt(g){if(locked)return;var it=items[idx],target=g==="m"?m:f;if(g===it.g){locked=true;if(!failed[idx])firstCorrect++;target.className="target good";$("fill").style.width=((idx+1)/items.length*100)+"%";setMsg("Corretto! ✓",false);speak(it.w);idx++;if(idx<items.length){var next=items[idx];card.textContent=next.w;$("wordAz").textContent=next.az;$("counter").textContent=(idx+1)+" / "+items.length;$("translation").textContent="";$("translation").className="translation";card.className="wordCard";setTimeout(function(){locked=false;m.className="target";f.className="target";setMsg("")},430)}else{setTimeout(finish,430)}}else{failed[idx]=true;target.className="target bad";setMsg("Səhvdir — bir daha düşün! ✕",true);setTimeout(function(){target.className="target";setMsg("")},650)}}
-m.addEventListener("click",function(){attempt("m")});f.addEventListener("click",function(){attempt("f")});
+document.getElementById("audioBtn").addEventListener("click",function(){speak(items[idx].w)});m.addEventListener("click",function(){attempt("m")});f.addEventListener("click",function(){attempt("f")});
 function hitTarget(x,y){var arr=[m,f],i,r;for(i=0;i<arr.length;i++){r=arr[i].getBoundingClientRect();if(x>=r.left&&x<=r.right&&y>=r.top&&y<=r.bottom)return arr[i]}return null}
 card.addEventListener("pointerdown",function(e){if(locked)return;drag=card;var r=card.getBoundingClientRect();dx=e.clientX-r.left;dy=e.clientY-r.top;card.setPointerCapture&&card.setPointerCapture(e.pointerId);card.className="wordCard dragging";card.style.position="fixed";card.style.width=r.width+"px";card.style.left=(e.clientX-dx)+"px";card.style.top=(e.clientY-dy)+"px";card.style.margin="0";e.preventDefault()});
 document.addEventListener("pointermove",function(e){if(!drag)return;card.style.left=(e.clientX-dx)+"px";card.style.top=(e.clientY-dy)+"px";var h=hitTarget(e.clientX,e.clientY);m.className=h===m?"target hot":"target";f.className=h===f?"target hot":"target"});
