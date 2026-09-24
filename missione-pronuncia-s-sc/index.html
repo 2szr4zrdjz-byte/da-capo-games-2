@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="az">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<title>Da Capo | Missione Pronuncia — S & SC</title>
+<style>
+:root{--g:#0b4f35;--g2:#24664d;--cream:#fbf7ec;--gold:#d8b552;--ink:#17362b;--muted:#718078;--line:#d9e5dc;--red:#b65353}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}body{margin:0;padding:9px;background:radial-gradient(circle at 7% 4%,#e8f1e8,transparent 24%),var(--cream);font-family:Arial,sans-serif;color:var(--ink)}
+.app{max-width:800px;margin:auto}.brand{text-align:center}.brand h1{margin:1px;font:700 30px Georgia,serif;color:var(--g)}.brand small{font-size:10px;letter-spacing:1.7px;color:var(--g2)}
+.title{text-align:center;font:700 27px Georgia,serif;color:var(--g);margin:14px 0 3px}.sub{text-align:center;color:var(--muted);font-size:13px;margin-bottom:12px}
+.rounds{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:10px}.round{background:#fff;border:1px solid var(--line);border-radius:14px;padding:9px 4px;text-align:center;font-size:11px;font-weight:900;color:#89938d}.round.on{border-color:var(--gold);background:#fffaf0;color:var(--g)}.round.done{background:#eaf4ed;color:var(--g)}
+.panel{background:#fffdf8;border:1px solid var(--line);border-radius:23px;padding:15px;box-shadow:0 13px 30px #17362b12}.meta{display:flex;justify-content:space-between;align-items:center;font-size:12px}.badge{background:#edf5ef;color:var(--g);padding:8px 11px;border-radius:99px;font-weight:900}.progress{height:6px;background:#e7ece8;border-radius:99px;overflow:hidden;margin:11px 0 15px}.fill{height:100%;background:var(--gold);transition:.25s}
+.prompt{text-align:center;min-height:122px;display:flex;flex-direction:column;align-items:center;justify-content:center}.word{font:700 35px Georgia,serif;color:var(--g);letter-spacing:.5px}.meaning{font:italic 16px Georgia,serif;color:var(--g2);margin:4px}.instruction{font-size:13px;color:#68766f;margin-top:5px}.listen{border:0;background:var(--g);color:#fff;border-radius:13px;padding:10px 14px;font-weight:900;margin-top:9px;cursor:pointer}
+.choices{display:grid;grid-template-columns:repeat(2,1fr);gap:9px;margin-top:11px}.choice{border:1px solid #bfd1c4;background:#fff;color:var(--g);border-radius:16px;padding:14px 8px;font-weight:900;cursor:pointer;min-height:61px}.choice small{display:block;font-weight:400;color:#6d7b73;margin-top:4px}.choice.good{background:#eaf5ed;border-color:#76a687}.choice.bad{background:#fff0f0;border-color:#d28c8c;animation:shake .25s}
+.zones{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0}.zone{min-height:94px;border:2px dashed #a9c0b0;border-radius:18px;background:#f8fbf8;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;color:var(--g);font-weight:900;padding:10px;transition:.16s}.zone small{display:block;color:#718078;font-weight:400;margin-top:4px}.zone.hot{background:#eaf5ed;border-color:var(--g)}.zone.good{background:#eaf5ed;border-style:solid}.zone.bad{background:#fff0f0;border-color:#c66}
+.dragcard{touch-action:none;-webkit-user-select:none;user-select:none;-webkit-user-drag:none;max-width:320px;margin:12px auto 2px;border:1px solid #bfd1c4;border-radius:17px;background:#fff;padding:15px;text-align:center;color:var(--g);font:700 25px Georgia,serif;cursor:grab;box-shadow:0 5px 14px #17362b10}.dragcard small{display:block;font:italic 14px Georgia,serif;color:var(--g2);margin-top:4px}.dragging{position:fixed!important;z-index:999;pointer-events:none;width:260px;opacity:.95;box-shadow:0 15px 30px #0003}
+.msg{text-align:center;min-height:25px;margin-top:10px;font-size:13px;font-weight:900;color:var(--g)}.msg.err{color:var(--red)}
+.tip{background:#f3f7f3;border-left:4px solid var(--gold);border-radius:10px;padding:9px 11px;margin-top:9px;font-size:12px;color:#607067;display:none}.tip.show{display:block}
+.result{display:none;text-align:center;padding:25px 7px}.result.show{display:block}.pct{font:700 54px Georgia,serif;color:var(--g)}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin:17px 0}.stat{border:1px solid var(--line);border-radius:14px;padding:11px 3px;background:#fff;font-size:11px}.stat b{display:block;font-size:20px;color:var(--g)}.restart{border:0;background:var(--g);color:#fff;border-radius:14px;padding:13px 21px;font-weight:900;cursor:pointer}
+@keyframes shake{25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}@media(max-width:540px){body{padding:6px}.panel{padding:11px}.title{font-size:24px}.word{font-size:31px}.choice{padding:12px 5px;font-size:13px}.zones{gap:7px}.zone{font-size:14px}.prompt{min-height:116px}}
+</style></head>
+<body><main class="app">
+<header class="brand"><div style="font-size:34px">🌳</div><h1>Da Capo</h1><small>GUIDED SELF-STUDY MEMBERSHIP</small></header>
+<div class="title">Missione Pronuncia 🎧🇮🇹</div><div class="sub">S & SC — gör, dinlə, fərqləndir.</div>
+<div class="rounds"><div id="r0" class="round on">🎧 ROUND 1<br>S: /s/ o /z/?</div><div id="r1" class="round">🧩 ROUND 2<br>SC: /sk/ o /ʃ/?</div><div id="r2" class="round">👂 ROUND 3<br>Ascolta e scegli</div></div>
+<section class="panel"><div id="game">
+<div class="meta"><span id="badge" class="badge"></span><span id="count"></span></div><div class="progress"><div id="fill" class="fill"></div></div>
+<div id="prompt" class="prompt"></div><div id="zones" class="zones" style="display:none"></div><div id="dragArea"></div><div id="choices" class="choices"></div>
+<div id="msg" class="msg"></div><div id="tip" class="tip"></div>
+</div>
+<div id="result" class="result"><div style="font-size:48px">🎧🏆🌱</div><h2 style="font:700 29px Georgia;color:var(--g);margin:5px">Missione completata!</h2><div id="pct" class="pct"></div><div id="scoreline"></div><div class="stats"><div class="stat">S: /s/–/z/<b id="s0"></b></div><div class="stat">SC<b id="s1"></b></div><div class="stat">Ascolto<b id="s2"></b></div></div><button id="restart" class="restart">↻ Yenidən oyna</button></div>
+</section></main>
+<script>
+(()=>{
+const S=[
+{w:"sera",az:"axşam",sound:"s",rule:"S sözün əvvəlində saitdən əvvəl → /s/"},
+{w:"sole",az:"günəş",sound:"s",rule:"S sözün əvvəlində saitdən əvvəl → /s/"},
+{w:"studente",az:"tələbə",sound:"s",rule:"S + kar samit T → /s/"},
+{w:"spaghetti",az:"spagetti",sound:"s",rule:"S + kar samit P → /s/"},
+{w:"casa",az:"ev",sound:"z",rule:"İki sait arasındakı S çox vaxt → /z/"},
+{w:"rosa",az:"qızılgül",sound:"z",rule:"İki sait arasındakı S çox vaxt → /z/"},
+{w:"sbaglio",az:"səhv",sound:"z",rule:"S + cingiltili samit B → /z/"},
+{w:"svizzero",az:"isveçrəli",sound:"z",rule:"S + cingiltili samit V → /z/"}
+];
+const SC=[
+{w:"scala",az:"pilləkən",sound:"sk",rule:"SC + A → /sk/"},
+{w:"scopa",az:"süpürgə",sound:"sk",rule:"SC + O → /sk/"},
+{w:"scusa",az:"üzr / bağışla",sound:"sk",rule:"SC + U → /sk/"},
+{w:"scuola",az:"məktəb",sound:"sk",rule:"SC + U → /sk/"},
+{w:"scena",az:"səhnə",sound:"sh",rule:"SC + E → /ʃ/"},
+{w:"scimmia",az:"meymun",sound:"sh",rule:"SC + I → /ʃ/"},
+{w:"pesce",az:"balıq",sound:"sh",rule:"SC + E → /ʃ/"},
+{w:"sciare",az:"xizək sürmək",sound:"sh",rule:"SCI + sait → /ʃ/"}
+];
+const LISTEN=[
+{w:"sbaglio",az:"səhv",opts:["sbaglio","spaglio","scaglio"]},
+{w:"sera",az:"axşam",opts:["sera","scera","zera"]},
+{w:"svizzero",az:"isveçrəli",opts:["svizzero","sfizzero","scizzero"]},
+{w:"scala",az:"pilləkən",opts:["scala","sciàla","sala"]},
+{w:"scena",az:"səhnə",opts:["scena","sena","schena"]},
+{w:"scimmia",az:"meymun",opts:["scimmia","schimmia","simmia"]},
+{w:"pesce",az:"balıq",opts:["pesce","pesche","pese"]},
+{w:"scuola",az:"məktəb",opts:["scuola","sciuola","suola"]}
+];
+const $=x=>document.getElementById(x), shuffle=a=>[...a].sort(()=>Math.random()-.5);
+let R=0,Q=0,score=[0,0,0],failed={},locked=false,last="";
+let roundData=[shuffle(S),shuffle(SC),shuffle(LISTEN)];
+function reshuffleRounds(){roundData=[shuffle(S),shuffle(SC),shuffle(LISTEN)]}
+function speak(t){if(!("speechSynthesis"in window))return;speechSynthesis.cancel();let u=new SpeechSynthesisUtterance(t);u.lang="it-IT";u.rate=.72;let vs=speechSynthesis.getVoices(),v=vs.find(x=>/^it(-|_)/i.test(x.lang));if(v)u.voice=v;speechSynthesis.speak(u)}
+function nav(){for(let i=0;i<3;i++)$("r"+i).className="round "+(i<R?"done":i===R?"on":"")}
+function base(){locked=false;nav();$("choices").innerHTML="";$("dragArea").innerHTML="";$("zones").innerHTML="";$("zones").style.display="none";$("msg").textContent="";$("msg").className="msg";$("tip").className="tip";$("count").textContent=(R*8+Q+1)+" / 24";$("fill").style.width=((R*8+Q)/24*100)+"%"}
+function render(){base();
+if(R===0){let x=roundData[0][Q];$("badge").textContent="ROUND 1 · S: /s/ O /z/?";$("prompt").innerHTML=`<div class="word">${x.w}</div><div class="meaning">${x.az}</div><button class="listen" id="listen">🔊 Sözü dinlə</button><div class="instruction">S hərfinin səsini seç.</div>`;$("listen").onclick=()=>speak(x.w);makeChoices([{v:"s",t:"/s/",d:"cingiltisiz S"},{v:"z",t:"/z/",d:"cingiltili S"}],x.sound,x)}
+if(R===1){let x=roundData[1][Q];$("badge").textContent="ROUND 2 · SC: /sk/ O /ʃ/?";$("prompt").innerHTML=`<div class="instruction">Sözü dinlə və düzgün fonetik zonaya sürüşdür.</div><button class="listen" id="listen">🔊 Sözü dinlə</button>`;$("listen").onclick=()=>speak(x.w);$("zones").style.display="grid";$("zones").innerHTML=`<div class="zone" data-v="sk">/sk/<small>SC + A, O, U</small></div><div class="zone" data-v="sh">/ʃ/<small>SC + E, I</small></div>`;let c=document.createElement("div");c.className="dragcard";c.innerHTML=`${x.w}<small>${x.az}</small>`;c.onclick=()=>{};$("dragArea").appendChild(c);enableDrag(c,x)}
+if(R===2){let x=roundData[2][Q];$("badge").textContent="ROUND 3 · ASCOLTA E SCEGLI";$("prompt").innerHTML=`<div class="word">🎧 ?</div><div class="meaning">${x.az}</div><button class="listen" id="listen">🔊 Dinlə</button><div class="instruction">Eşitdiyin italyanca sözü seç.</div>`;$("listen").onclick=()=>speak(x.w);makeListenChoices(shuffle(x.opts),x)}
+}
+function makeChoices(a,correct,x){a.forEach(o=>{let b=document.createElement("button");b.className="choice";b.innerHTML=`${o.t}<small>${o.d}</small>`;b.onclick=()=>answer(b,o.v,correct,x);$("choices").appendChild(b)})}
+function makeListenChoices(a,x){a.forEach(v=>{let b=document.createElement("button");b.className="choice";b.textContent=v;b.onclick=()=>answer(b,v,x.w,x);$("choices").appendChild(b)})}
+function answer(b,v,c,x){if(locked)return;if(v===c){locked=true;b.classList.add("good");if(!failed[R+"-"+Q])score[R]++;last=x.w;speak(x.w);$("msg").textContent="✓ "+x.w+" — "+x.az;if(x.rule){$("tip").textContent="💡 "+x.rule;$("tip").className="tip show"}setTimeout(next,1050)}else{failed[R+"-"+Q]=1;b.classList.add("bad");$("msg").textContent="Bir daha dinlə və düşün ✕";$("msg").className="msg err";setTimeout(()=>{b.classList.remove("bad");$("msg").textContent="";$("msg").className="msg"},520)}}
+function zoneAnswer(zone,x){if(locked)return;if(zone.dataset.v===x.sound){locked=true;zone.classList.add("good");if(!failed[R+"-"+Q])score[R]++;speak(x.w);$("msg").textContent="✓ "+x.w+" — "+x.az;$("tip").textContent="💡 "+x.rule;$("tip").className="tip show";$("dragArea").style.visibility="hidden";setTimeout(next,1050)}else{failed[R+"-"+Q]=1;zone.classList.add("bad");$("msg").textContent="Yanlış zona — yenidən sına ✕";$("msg").className="msg err";setTimeout(()=>{zone.classList.remove("bad");$("msg").textContent="";$("msg").className="msg"},500)}}
+function next(){Q++;if(Q===8){Q=0;R++;if(R===3){finish();return}}$("dragArea").style.visibility="visible";render()}
+function finish(){$("game").style.display="none";$("result").className="result show";let n=score.reduce((a,b)=>a+b,0);$("pct").textContent=Math.round(n/24*100)+"%";$("scoreline").textContent=n+" / 24 — ilk cəhddə düzgün";score.forEach((x,i)=>$("s"+i).textContent=x+"/8")}
+function enableDrag(el,x){let on=false,dx=0,dy=0;el.addEventListener("pointerdown",e=>{if(locked)return;let r=el.getBoundingClientRect();dx=e.clientX-r.left;dy=e.clientY-r.top;on=true;el.setPointerCapture&&el.setPointerCapture(e.pointerId);el.classList.add("dragging");el.style.left=e.clientX-dx+"px";el.style.top=e.clientY-dy+"px";e.preventDefault()});el.addEventListener("pointermove",e=>{if(!on)return;el.style.left=e.clientX-dx+"px";el.style.top=e.clientY-dy+"px";document.querySelectorAll(".zone").forEach(z=>{let r=z.getBoundingClientRect(),h=e.clientX>=r.left&&e.clientX<=r.right&&e.clientY>=r.top&&e.clientY<=r.bottom;z.classList.toggle("hot",h)})});el.addEventListener("pointerup",e=>{if(!on)return;let hit=null;document.querySelectorAll(".zone").forEach(z=>{let r=z.getBoundingClientRect();if(e.clientX>=r.left&&e.clientX<=r.right&&e.clientY>=r.top&&e.clientY<=r.bottom)hit=z;z.classList.remove("hot")});el.classList.remove("dragging");el.style.left=el.style.top="";on=false;if(hit)zoneAnswer(hit,x)})}
+$("restart").onclick=()=>{R=Q=0;score=[0,0,0];failed={};reshuffleRounds();$("game").style.display="block";$("result").className="result";$("dragArea").style.visibility="visible";render()};render();
+})();
+</script></body></html>
