@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="az">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<title>Da Capo | Il primo dialogo — Speaking</title>
+<style>
+:root{--g:#0b4f35;--g2:#27644e;--cream:#fbf7ec;--gold:#d8b552;--ink:#17362b;--muted:#748179;--line:#d9e5dc;--left:#edf6ef;--right:#fff8df;--ok:#237a4b;--bad:#a84d45}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;padding:10px;background:radial-gradient(circle at 7% 3%,#e8f1e8,transparent 25%),var(--cream);font-family:Arial,sans-serif;color:var(--ink)}
+.app{max-width:820px;margin:auto}.brand{text-align:center}.brand h1{margin:0;font:700 31px Georgia,serif;color:var(--g)}.brand small{font-size:10px;letter-spacing:1.7px;color:var(--g2)}
+.title{text-align:center;font:700 28px Georgia,serif;color:var(--g);margin:14px 0 3px}.sub{text-align:center;color:var(--muted);font-size:13px;margin-bottom:13px}
+.panel{background:#fffdf8;border:1px solid var(--line);border-radius:23px;padding:14px;box-shadow:0 13px 30px #17362b12}
+.legend{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:15px;font-size:11px}.legend span{padding:7px 10px;border-radius:99px;font-weight:800}.listenL{background:var(--left);color:var(--g)}.speakR{background:var(--right);color:#745c18}
+.chat{display:flex;flex-direction:column;gap:14px}.row{display:flex;align-items:flex-end;gap:8px}.row.right{justify-content:flex-end}.avatar{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#dfece2;font-size:18px;flex:0 0 34px}.row.right .avatar{background:#f7e8b8}
+.bubble{max-width:79%;border-radius:18px;padding:12px 13px;border:1px solid var(--line)}.left .bubble{background:var(--left);border-bottom-left-radius:5px}.right .bubble{background:var(--right);border-bottom-right-radius:5px}
+.it{font:700 18px Georgia,serif;color:var(--g);line-height:1.3}.az{font-size:12px;color:#6f7c75;margin-top:5px;line-height:1.35}.right .it{color:#6e581c}
+.audio,.rec,.stop,.play{border:0;border-radius:10px;padding:8px 10px;font-size:11px;font-weight:900;cursor:pointer;margin-top:8px}.audio{background:var(--g);color:#fff}.rec{background:#a94a45;color:white}.stop{background:#3f4e48;color:white}.play{background:#fff;border:1px solid #d6c88f;color:#6e581c}
+.actions{display:flex;gap:6px;flex-wrap:wrap}.status{font-size:11px;font-weight:800;margin-top:8px;min-height:15px}.status.ok{color:var(--ok)}.status.bad{color:var(--bad)}.heard{font-size:11px;color:#68766f;margin-top:4px;font-style:italic}.nameblank{display:inline-block;min-width:80px;border-bottom:2px solid #8b722a;margin-left:4px}
+.controls{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:17px}.controls button{border:1px solid #b9cdbf;border-radius:13px;padding:11px;background:#fff;color:var(--g);font-weight:900;cursor:pointer}.controls .playq{background:var(--g);color:#fff}.note{margin-top:13px;background:#f4f8f4;border-left:4px solid var(--gold);border-radius:10px;padding:10px 12px;font-size:12px;color:#64736b;line-height:1.45}
+.warn{display:none;margin-bottom:12px;background:#fff1e9;border:1px solid #efc6b1;border-radius:12px;padding:10px;font-size:12px;color:#814936}
+button:disabled{opacity:.45;cursor:not-allowed}
+@media(max-width:540px){body{padding:6px}.panel{padding:10px}.bubble{max-width:84%}.it{font-size:17px}.avatar{width:30px;height:30px;flex-basis:30px}.controls{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<main class="app">
+<header class="brand"><div style="font-size:34px">🌳</div><h1>Da Capo</h1><small>GUIDED SELF-STUDY MEMBERSHIP</small></header>
+<div class="title">Il primo dialogo 🎙️🇮🇹</div>
+<div class="sub">Dinlə → öz cavabını yaz → tələffüzünü yoxla → səsini dinlə.</div>
+<section class="panel">
+<div id="warning" class="warn"></div>
+<div class="legend"><span class="listenL">🔊 Sol tərəf — dinlə</span><span class="speakR">🎙️ Sağ tərəf — sən danış</span></div>
+<div id="chat" class="chat"></div>
+<div class="controls">
+<button id="replay">▶️ Tam dialoqu dinlə</button>
+<button id="nextAudio" class="playq">🔊 Növbəti sualı dinlə</button>
+</div>
+<div class="note">🌱 <b>Speaking practice:</b> “🎙️ Yaz” düyməsinə toxun, cavabı italyanca de və “⏹ Bitir” seç. Yazını sonra ▶️ dinləyə bilərsən. Adını və yaşını öz məlumatına uyğun de. Brauzer nitqin mətnini tanıya bilirsə, sistem cavabın əsas sözlərini yoxlayıb nəticə göstərəcək. Son “Piacere!” cavabını yazıb bitirən kimi bütün dialoq avtomatik olaraq soldakı sistem səsi və sağdakı sənin yazdığın səslərlə başdan sona səsləndiriləcək.</div>
+</section>
+</main>
+<script>
+(()=>{
+const lines=[
+{side:"left",it:"Ciao, come stai?",az:"Salam, necəsən?"},
+{side:"right",it:"Sto bene, e tu?",az:"Yaxşıyam, bəs sən?",check:["sto","bene","tu"]},
+{side:"left",it:"Come ti chiami?",az:"Adın nədir?"},
+{side:"right",it:"Mi chiamo ",blank:true,az:"Mənim adım ...-dır.",check:["mi","chiamo"]},
+{side:"left",it:"Di dove sei?",az:"Haralısan?"},
+{side:"right",it:"Io sono di Azerbaigian.",az:"Mən Azərbaycandanam.",check:["sono","azerbaigian"]},
+{side:"left",it:"Quanti anni hai?",az:"Neçə yaşın var?"},
+{side:"right",it:"Ho ",ageblank:true,az:"Mənim ... yaşım var.",check:["ho","anni"]},
+{side:"left",it:"Piacere!",az:"Tanış olmağıma şadam!"},
+{side:"right",it:"Piacere!",az:"Mən də şadam!",check:["piacere"]}
+];
+const chat=document.getElementById("chat"), warning=document.getElementById("warning");
+let currentQ=0, recorder=null, chunks=[], activeIndex=null, recognition=null, recognized="";
+const audioURLs={};
+const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+function normalize(s){return (s||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-zàèéìòù' ]/gi," ").replace(/\s+/g," ").trim()}
+function speak(t){if(!("speechSynthesis"in window))return;speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang="it-IT";u.rate=.78;const v=speechSynthesis.getVoices().find(x=>/^it(-|_)/i.test(x.lang));if(v)u.voice=v;speechSynthesis.speak(u)}
+function resultFor(i,text){const el=document.getElementById("status-"+i),heard=document.getElementById("heard-"+i);if(text)heard.textContent='Eşidilən: “'+text+'”';if(!SR){el.textContent="Səsin yazıldı — özünü dinlə və nümunə ilə müqayisə et.";el.className="status";return}const n=normalize(text),needed=lines[i].check||[];const hits=needed.filter(w=>n.includes(normalize(w))).length;const ratio=needed.length?hits/needed.length:0;if(ratio>=.75){el.textContent="✅ Əla! Cavabın tanındı.";el.className="status ok"}else{el.textContent="🔄 Bir də cəhd et — əsas sözlər tam tanınmadı.";el.className="status bad"}}
+function render(){chat.innerHTML="";lines.forEach((x,i)=>{const row=document.createElement("div");row.className="row "+x.side;const av=document.createElement("div");av.className="avatar";av.textContent=x.side==="left"?"🇮🇹":"🎙️";const b=document.createElement("div");b.className="bubble";let phrase=x.blank?'Mi chiamo <span class="nameblank">&nbsp;</span>.':(x.ageblank?'Ho <span class="nameblank">&nbsp;</span> anni.':x.it);b.innerHTML=`<div class="it">${phrase}</div><div class="az">${x.az}</div>`;if(x.side==="left"){b.innerHTML+=`<button class="audio" data-i="${i}">🔊 Dinlə</button>`}else{b.innerHTML+=`<div class="actions"><button class="rec" data-rec="${i}">🎙️ Yaz</button><button class="stop" data-stop="${i}" disabled>⏹ Bitir</button><button class="play" data-play="${i}" disabled>▶️ Səsimi dinlə</button></div><div id="status-${i}" class="status">Cavabı özün səsləndir.</div><div id="heard-${i}" class="heard"></div>`}if(x.side==="left"){row.append(av,b)}else{row.append(b,av)}chat.appendChild(row)});document.querySelectorAll(".audio").forEach(b=>b.onclick=()=>speak(lines[+b.dataset.i].it));document.querySelectorAll("[data-rec]").forEach(b=>b.onclick=()=>startRecording(+b.dataset.rec));document.querySelectorAll("[data-stop]").forEach(b=>b.onclick=()=>stopRecording(+b.dataset.stop));document.querySelectorAll("[data-play]").forEach(b=>b.onclick=()=>{const u=audioURLs[+b.dataset.play];if(u)new Audio(u).play()})}
+async function startRecording(i){if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia||!window.MediaRecorder){warning.style.display="block";warning.textContent="Bu brauzerdə mikrofonla yazma dəstəklənmir. Səhifəni HTTPS üzərindən Chrome/Safari-də aç.";return}try{if(recorder&&recorder.state==="recording")recorder.stop();const stream=await navigator.mediaDevices.getUserMedia({audio:true});chunks=[];recognized="";activeIndex=i;recorder=new MediaRecorder(stream);recorder.ondataavailable=e=>{if(e.data.size)chunks.push(e.data)};recorder.onstop=()=>{const blob=new Blob(chunks,{type:recorder.mimeType||"audio/webm"});if(audioURLs[i])URL.revokeObjectURL(audioURLs[i]);audioURLs[i]=URL.createObjectURL(blob);const pb=document.querySelector(`[data-play="${i}"]`);if(pb)pb.disabled=false;stream.getTracks().forEach(t=>t.stop());setTimeout(()=>{resultFor(i,recognized);if(i===lines.length-1){setTimeout(()=>playFullDialogue(),350)}},250)};recorder.start();document.querySelector(`[data-rec="${i}"]`).disabled=true;document.querySelector(`[data-stop="${i}"]`).disabled=false;const st=document.getElementById("status-"+i);st.textContent="🔴 Yazılır... danış.";st.className="status bad";if(SR){recognition=new SR();recognition.lang="it-IT";recognition.interimResults=true;recognition.continuous=true;recognition.onresult=e=>{let t="";for(let k=0;k<e.results.length;k++)t+=e.results[k][0].transcript+" ";recognized=t.trim()};recognition.onerror=()=>{};try{recognition.start()}catch(e){}}}catch(e){warning.style.display="block";warning.textContent="Mikrofon icazəsi verilmədi və ya brauzer onu blokladı. HTTPS linkində mikrofon icazəsini aktivləşdir."}}
+function stopRecording(i){if(recognition){try{recognition.stop()}catch(e){}recognition=null}if(recorder&&recorder.state==="recording")recorder.stop();const r=document.querySelector(`[data-rec="${i}"]`),s=document.querySelector(`[data-stop="${i}"]`);if(r)r.disabled=false;if(s)s.disabled=true}
+function sleep(ms){return new Promise(resolve=>setTimeout(resolve,ms))}
+function speakAsync(t){return new Promise(resolve=>{if(!("speechSynthesis"in window)){resolve();return}speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang="it-IT";u.rate=.78;const v=speechSynthesis.getVoices().find(x=>/^it(-|_)/i.test(x.lang));if(v)u.voice=v;u.onend=()=>resolve();u.onerror=()=>resolve();speechSynthesis.speak(u)})}
+function playRecordedAsync(i){return new Promise(resolve=>{const url=audioURLs[i];if(!url){resolve();return}const a=new Audio(url);a.onended=()=>resolve();a.onerror=()=>resolve();a.play().catch(()=>resolve())})}
+async function playFullDialogue(){document.getElementById("nextAudio").disabled=true;document.getElementById("replay").disabled=true;for(let i=0;i<lines.length;i++){if(lines[i].side==="left")await speakAsync(lines[i].it);else await playRecordedAsync(i);await sleep(220)}document.getElementById("nextAudio").disabled=false;document.getElementById("replay").disabled=false}
+const leftIdx=[0,2,4,6,8];
+document.getElementById("nextAudio").onclick=()=>{speak(lines[leftIdx[currentQ]].it);currentQ=(currentQ+1)%leftIdx.length};
+document.getElementById("replay").onclick=()=>{currentQ=0;playFullDialogue()};
+render();
+})();
+</script>
+</body>
+</html>
