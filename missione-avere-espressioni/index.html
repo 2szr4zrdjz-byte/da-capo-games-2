@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="az">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<title>Da Capo | Missione AVERE — Le espressioni</title>
+<style>
+:root{--g:#0b4f35;--g2:#28654e;--cream:#fbf7ec;--gold:#d8b552;--ink:#17362b;--mut:#718078;--ok:#28794e;--bad:#a84d45}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;padding:10px;background:radial-gradient(circle at 8% 2%,#e5efe5,transparent 28%),var(--cream);font-family:Arial,sans-serif;color:var(--ink)}
+.app{max-width:760px;margin:auto}.brand{text-align:center;color:var(--g)}.brand h1{font:700 31px Georgia,serif;margin:0}.brand small{font-size:10px;letter-spacing:1.6px}
+h2{text-align:center;font:700 27px Georgia,serif;color:var(--g);margin:14px 0 3px}.sub{text-align:center;color:var(--mut);font-size:13px;margin-bottom:12px}
+.panel{background:#fffdf8;border:1px solid #dce5dc;border-radius:24px;padding:16px;box-shadow:0 12px 30px #17362b12}
+.top{display:flex;justify-content:space-between;gap:8px;align-items:center;font-size:11px;font-weight:900}.badge{background:#edf5ee;color:var(--g);border-radius:99px;padding:7px 10px}.score{color:#806921}
+.bar{height:7px;background:#e8eee8;border-radius:9px;overflow:hidden;margin:12px 0 17px}.fill{height:100%;width:0;background:linear-gradient(90deg,var(--g2),var(--gold));transition:.35s}
+.rt{text-align:center;font:700 21px Georgia,serif;color:var(--g)}.ins{text-align:center;color:var(--mut);font-size:12px;margin:5px 0 14px}
+.qbox{background:#f5f8f3;border:1px solid #dbe8dd;border-radius:18px;padding:18px;text-align:center;min-height:125px;display:flex;flex-direction:column;justify-content:center}
+.icon{font-size:38px;margin-bottom:7px}.it{font:700 22px Georgia,serif;color:var(--g);line-height:1.35}.az{font-size:13px;color:#69786f;margin-top:8px;line-height:1.4}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:13px}.opt,.chip{border:1px solid #c9d9cd;background:#fff;border-radius:13px;padding:12px 9px;color:var(--g);font-weight:900;cursor:pointer;min-height:45px}.opt.ok{background:#e5f4e9;border-color:#75af87;color:var(--ok)}.opt.bad{background:#fae9e6;border-color:#dfa39c;color:var(--bad)}
+.fb{text-align:center;min-height:38px;margin-top:10px;font-size:12px;font-weight:900}.good{color:var(--ok)}.wrong{color:var(--bad)}
+.audio{border:0;background:var(--g);color:#fff;border-radius:10px;padding:7px 10px;font-weight:900;cursor:pointer;margin-left:5px}
+.build{min-height:62px;border:2px dashed #b8cdbc;border-radius:15px;margin-top:12px;padding:9px;display:flex;gap:7px;flex-wrap:wrap;align-items:center;justify-content:center}
+.bank{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:12px}.placed{background:#eaf3eb;border:1px solid #b9d0be;border-radius:10px;padding:9px;color:var(--g);font-weight:900;cursor:pointer}.hide{display:none!important}
+.result{text-align:center;padding:8px}.pct{font:700 52px Georgia,serif;color:var(--g);margin:8px}.results{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin:14px 0}.mini{background:#f1f6f1;border-radius:12px;padding:10px;font-size:11px}.mini b{display:block;font-size:18px;color:var(--g);margin-top:3px}.restart{border:0;border-radius:13px;background:var(--g);color:#fff;padding:12px 20px;font-weight:900;cursor:pointer}
+@media(max-width:540px){body{padding:6px}.panel{padding:12px}.opts{grid-template-columns:1fr 1fr}.it{font-size:19px}.results{grid-template-columns:1fr}}
+</style></head>
+<body><main class="app">
+<header class="brand"><div style="font-size:34px">🌳</div><h1>Da Capo</h1><small>GUIDED SELF-STUDY MEMBERSHIP</small></header>
+<h2>Missione AVERE 🇮🇹</h2><div class="sub">Le espressioni — tanı, kontekstdə seç, cümləni özün qur.</div>
+<section class="panel"><div class="top"><span id="badge" class="badge"></span><span id="score" class="score">0 / 30</span></div><div class="bar"><div id="fill" class="fill"></div></div><div id="game"></div></section>
+</main>
+<script>
+(()=>{
+const sh=a=>[...a].sort(()=>Math.random()-.5);
+const EXPRESS=[
+["🍕","avere fame","ac olmaq"],["💧","avere sete","susamaq"],["😴","avere sonno","yuxusu gəlmək"],["😨","avere paura","qorxmaq"],["🥶","avere freddo","üşümək"],["🥵","avere caldo","isti olmaq / istisi gəlmək"],["🏃","avere fretta","tələsmək"],["✅","avere ragione","haqlı olmaq"],["❌","avere torto","haqsız olmaq"],["✨","avere voglia di...","... etmək istəmək / həvəsi olmaq"]
+];
+const SITU=[
+["Marco non mangia da stamattina.","Marco səhərdən heç nə yeməyib.","avere fame"],
+["Giulia ha bevuto pochissimo oggi.","Giulia bu gün çox az maye içib.","avere sete"],
+["È mezzanotte e Paolo non riesce a tenere gli occhi aperti.","Gecə yarısıdır və Paolo gözlərini açıq saxlaya bilmir.","avere sonno"],
+["Sara vede un cane enorme e si spaventa.","Sara nəhəng bir it görür və qorxur.","avere paura"],
+["Fuori nevica e Luca non ha la giacca.","Çöldə qar yağır və Lucanın gödəkçəsi yoxdur.","avere freddo"],
+["È agosto e nella stanza non c'è aria condizionata.","Avqustdur və otaqda kondisioner yoxdur.","avere caldo"],
+["Il treno parte tra cinque minuti e Anna è ancora a casa.","Qatar beş dəqiqəyə gedir, Anna isə hələ evdədir.","avere fretta"],
+["Marco dice che Roma è la capitale d'Italia. È corretto.","Marco deyir ki, Roma İtaliyanın paytaxtıdır. Bu doğrudur.","avere ragione"],
+["Paolo dice che Milano è la capitale d'Italia. Non è corretto.","Paolo deyir ki, Milan İtaliyanın paytaxtıdır. Bu doğru deyil.","avere torto"],
+["Dopo mesi di lavoro, Elena desidera partire per Roma.","Aylarla işlədikdən sonra Elena Romaya getmək istəyir.","avere voglia di..."]
+];
+const BUILD=[
+["Mən acam.",["Ho","fame."],"Ho fame."],
+["Sən susamısan.",["Tu","hai","sete."],"Tu hai sete."],
+["Onun yuxusu gəlir.",["Lui","ha","sonno."],"Lui ha sonno."],
+["Biz qorxuruq.",["Noi","abbiamo","paura."],"Noi abbiamo paura."],
+["Siz üşüyürsünüz.",["Voi","avete","freddo."],"Voi avete freddo."],
+["Onlara istidir.",["Loro","hanno","caldo."],"Loro hanno caldo."],
+["Mən tələsirəm.",["Ho","fretta."],"Ho fretta."],
+["Sən haqlısan.",["Tu","hai","ragione."],"Tu hai ragione."],
+["O haqsızdır.",["Lei","ha","torto."],"Lei ha torto."],
+["Biz səyahət etmək istəyirik.",["Noi","abbiamo","voglia","di","viaggiare."],"Noi abbiamo voglia di viaggiare."]
+];
+let data=[sh(EXPRESS),sh(SITU),sh(BUILD)],r=0,n=0,total=0,rs=[0,0,0],first=true,placed=[],bank=[];
+const game=document.getElementById("game"),badge=document.getElementById("badge"),score=document.getElementById("score"),fill=document.getElementById("fill");
+function say(t){if(!("speechSynthesis"in window))return;speechSynthesis.cancel();let u=new SpeechSynthesisUtterance(t);u.lang="it-IT";u.rate=.78;let v=speechSynthesis.getVoices().find(x=>/^it(-|_)/i.test(x.lang));if(v)u.voice=v;speechSynthesis.speak(u)}
+function upd(){score.textContent=total+" / 30";fill.style.width=((r*10+n)/30*100)+"%"}
+function next(){setTimeout(()=>{n++;first=true;placed=[];if(n===10){r++;n=0;if(r===3){finish();return}}render()},900)}
+function optionsFor(answer,source){return sh([answer,...sh(source.filter(x=>x!==answer)).slice(0,3)])}
+function choose(btn,val,ans,audio){
+ if(val===ans){document.querySelectorAll(".opt").forEach(x=>x.disabled=true);btn.classList.add("ok");if(first){total++;rs[r]++}let f=document.getElementById("fb");f.className="fb good";f.innerHTML='✅ Düzdür! <button id="aud" class="audio">🔊 Dinlə</button>';say(audio);document.getElementById("aud").onclick=()=>say(audio);next()}
+ else{first=false;btn.classList.add("bad");let f=document.getElementById("fb");f.className="fb wrong";f.textContent="🔄 Bir də düşün."}
+}
+function render(){upd();
+ if(r===0){badge.textContent="ROUND 1 · ABBINA";let x=data[0][n], meanings=EXPRESS.map(z=>z[2]),opts=optionsFor(x[2],meanings);
+  game.innerHTML=`<div class="rt">Abbina il significato 🧩</div><div class="ins">İfadənin düzgün Azərbaycan dilində mənasını seç.</div><div class="qbox"><div class="icon">${x[0]}</div><div class="it">${x[1]}</div></div><div class="opts">${opts.map(v=>`<button class="opt">${v}</button>`).join("")}</div><div id="fb" class="fb"></div>`;
+  document.querySelectorAll(".opt").forEach(b=>b.onclick=()=>choose(b,b.textContent,x[2],x[1]));
+ }else if(r===1){badge.textContent="ROUND 2 · NELLA VITA";let x=data[1][n], all=EXPRESS.map(z=>z[1]),opts=optionsFor(x[2],all);
+  game.innerHTML=`<div class="rt">Nella vita 🎭</div><div class="ins">Situasiyanı oxu və uyğun AVERE ifadəsini seç.</div><div class="qbox"><div class="it">${x[0]}</div><div class="az">🇦🇿 ${x[1]}</div></div><div class="opts">${opts.map(v=>`<button class="opt">${v}</button>`).join("")}</div><div id="fb" class="fb"></div>`;
+  document.querySelectorAll(".opt").forEach(b=>b.onclick=()=>choose(b,b.textContent,x[2],x[0]));
+ }else{badge.textContent="ROUND 3 · COSTRUISCI";let x=data[2][n];bank=sh(x[1].map((w,i)=>({w,i})));
+  game.innerHTML=`<div class="rt">Costruisci la frase 💬</div><div class="ins">Sözlərə düzgün ardıcıllıqla toxun və italyanca cümləni qur.</div><div class="qbox"><div class="az" style="font-size:15px">🇦🇿 ${x[0]}</div><div id="build" class="build"></div></div><div class="bank">${bank.map((z,j)=>`<button class="chip" data-j="${j}">${z.w}</button>`).join("")}</div><div id="fb" class="fb"></div>`;
+  document.querySelectorAll(".chip").forEach(b=>b.onclick=()=>{b.classList.add("hide");placed.push({j:+b.dataset.j,w:b.textContent});drawBuild(x)});
+ }
+}
+function drawBuild(x){
+ const box=document.getElementById("build");box.innerHTML=placed.map((z,k)=>`<span class="placed" data-k="${k}">${z.w}</span>`).join("");
+ document.querySelectorAll(".placed").forEach(p=>p.onclick=()=>{let z=placed.splice(+p.dataset.k,1)[0];document.querySelector(`.chip[data-j="${z.j}"]`).classList.remove("hide");drawBuild(x)});
+ if(placed.length===x[1].length){let made=placed.map(z=>z.w).join(" ");
+  if(made===x[2]){if(first){total++;rs[2]++}let f=document.getElementById("fb");f.className="fb good";f.innerHTML='✅ Düzdür! <button id="aud" class="audio">🔊 Cümləni dinlə</button>';say(x[2]);document.getElementById("aud").onclick=()=>say(x[2]);document.querySelectorAll(".placed").forEach(p=>p.style.pointerEvents="none");next()}
+  else{first=false;let f=document.getElementById("fb");f.className="fb wrong";f.textContent="🔄 Ardıcıllıq düzgün deyil. Sözə toxunaraq geri qaytar."}
+ }
+}
+function finish(){fill.style.width="100%";badge.textContent="MISSIONE COMPLETATA";let pct=Math.round(total/30*100);
+ game.innerHTML=`<div class="result"><div style="font-size:44px">🌱🏆</div><div class="rt">Missione completata!</div><div class="pct">${pct}%</div><div>${total} / 30 — ilk cəhddə düzgün</div><div class="results"><div class="mini">Abbina<b>${rs[0]}/10</b></div><div class="mini">Nella vita<b>${rs[1]}/10</b></div><div class="mini">Costruisci<b>${rs[2]}/10</b></div></div><button id="again" class="restart">↻ Yenidən oyna</button></div>`;
+ document.getElementById("again").onclick=()=>{data=[sh(EXPRESS),sh(SITU),sh(BUILD)];r=n=total=0;rs=[0,0,0];first=true;placed=[];render()}
+}
+render();
+})();
+</script></body></html>
