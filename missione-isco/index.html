@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="az">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Da Capo | Missione -ISCO</title>
+<style>
+:root{--g:#1f5b43;--g2:#2f7659;--cream:#f7f1e5;--gold:#c79a43;--ink:#24342c;--red:#a84444}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}body{margin:0;background:linear-gradient(145deg,#fbf8f0,#edf4ee);font-family:Arial,sans-serif;color:var(--ink);min-height:100vh;padding:16px}.app{max-width:760px;margin:auto;background:#fff;border-radius:28px;box-shadow:0 18px 55px #1f5b4320;overflow:hidden}.head{background:var(--g);color:white;padding:24px;text-align:center}.brand{font:700 13px Georgia,serif;letter-spacing:1.7px;color:#f0dca8}.head h1{font:700 34px Georgia,serif;margin:7px 0}.head p{margin:0;opacity:.88}.progress{display:flex;gap:8px;justify-content:center;padding:16px}.dot{width:12px;height:12px;border-radius:50%;background:#d9e2dc}.dot.on{background:var(--gold)}main{padding:0 22px 28px}.card{background:var(--cream);border:1px solid #e8dcc3;border-radius:20px;padding:20px;margin:10px 0}.title{font:700 25px Georgia,serif;color:var(--g);margin:0 0 7px}.sub{color:#66756d;font-size:14px;line-height:1.45}.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:17px}.choice,.verb{border:2px solid #dbe6df;background:white;border-radius:15px;padding:14px;text-align:center;min-height:68px;display:grid;place-items:center;font-weight:700;cursor:pointer;user-select:none}.choice small{font-weight:400;color:#65756c;display:block;margin-top:4px}.selected{border-color:var(--gold);background:#fff9e9}.matched{opacity:.42;pointer-events:none}.ok{border-color:#72a886!important;background:#edf8f0!important}.bad{border-color:#d58c8c!important;background:#fff0f0!important}.btn{border:0;border-radius:14px;background:var(--g);color:white;padding:14px 18px;font-weight:700;font-size:15px;cursor:pointer}.btn.secondary{background:white;color:var(--g);border:1px solid #cbdad1}.nav{display:flex;justify-content:center;margin-top:18px}.hidden{display:none!important}.conj{display:grid;grid-template-columns:72px 1fr;gap:9px;align-items:center;margin:8px 0}.conj label{font-weight:700;color:var(--g)}input{width:100%;font-size:17px;padding:13px;border:1.5px solid #cad9d0;border-radius:12px;outline:none;background:white}input:focus{border-color:var(--gold);box-shadow:0 0 0 3px #c79a4320}.feedback{margin-top:13px;padding:12px;border-radius:12px;font-size:14px;line-height:1.45}.feedback.good{background:#eaf6ed;color:#235d3d}.feedback.wrong{background:#fff0ee;color:#8b3939}.perfect{margin-top:10px;background:#fff8e7;border:1px solid #ead29b;border-radius:12px;padding:12px;color:#56441f}.sentence{font:700 20px Georgia,serif;line-height:1.45;margin:13px 0;color:#263b31}.counter{text-align:right;color:#77847d;font-size:13px}.final{text-align:center;padding:25px}.score{font:700 54px Georgia,serif;color:var(--g)}@media(max-width:560px){.grid{grid-template-columns:1fr 1fr}.head h1{font-size:29px}main{padding:0 15px 22px}.conj{grid-template-columns:60px 1fr}}
+</style></head><body>
+<div class="app"><header class="head"><div class="brand">DA CAPO · ITALIANO CON METODO</div><h1>🌱 Missione -ISCO</h1><p>Scopri · Coniuga · Scrivi</p></header><div class="progress"><i class="dot on"></i><i class="dot"></i><i class="dot"></i></div><main id="main"></main></div>
+<script>
+const verbs=[
+['finire','bitirmək','🏁'],['capire','başa düşmək','💡'],['preferire','üstün tutmaq','⭐'],['spedire','göndərmək','📦'],
+['unire','birləşdirmək','🔗'],['pulire','təmizləmək','🧹'],['chiarire','aydınlaşdırmaq','🔎'],['costruire','tikmək / qurmaq','🏗️']
+];
+const forms={
+finire:['finisco','finisci','finisce','finiamo','finite','finiscono'],
+capire:['capisco','capisci','capisce','capiamo','capite','capiscono'],
+preferire:['preferisco','preferisci','preferisce','preferiamo','preferite','preferiscono'],
+spedire:['spedisco','spedisci','spedisce','spediamo','spedite','spediscono'],
+unire:['unisco','unisci','unisce','uniamo','unite','uniscono'],
+pulire:['pulisco','pulisci','pulisce','puliamo','pulite','puliscono'],
+chiarire:['chiarisco','chiarisci','chiarisce','chiariamo','chiarite','chiariscono'],
+costruire:['costruisco','costruisci','costruisce','costruiamo','costruite','costruiscono']
+};
+const persons=['io','tu','lui/lei','noi','voi','loro'];let round=1,score=0,total=0;
+const main=document.querySelector('#main'), dots=[...document.querySelectorAll('.dot')];
+function norm(s){return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-zàèéìòù ]/gi,' ').replace(/\s+/g,' ').trim()}
+function speak(t,cb){speechSynthesis.cancel();let u=new SpeechSynthesisUtterance(t);u.lang='it-IT';u.rate=.9;let vs=speechSynthesis.getVoices(),v=vs.find(x=>x.lang.toLowerCase().startsWith('it'));if(v)u.voice=v;u.onend=()=>cb&&cb();speechSynthesis.speak(u)}
+function setRound(n){round=n;dots.forEach((d,i)=>d.classList.toggle('on',i===n-1))}
+function r1(){setRound(1);let selected=null,done=0;let left=[...verbs].sort(()=>Math.random()-.5),right=[...verbs].sort(()=>Math.random()-.5);main.innerHTML='<section class="card"><h2 class="title">1. Abbina le parole</h2><div class="sub">İtalyanca feili onun ikonkası və Azərbaycan dilində mənası ilə uyğunlaşdır.</div><div class="grid" id="g"></div><div id="fb"></div></section>';
+let g=document.querySelector('#g');left.forEach(v=>g.insertAdjacentHTML('beforeend',`<div class="verb" data-v="${v[0]}">🇮🇹 ${v[0]}</div>`));right.forEach(v=>g.insertAdjacentHTML('beforeend',`<div class="choice" data-v="${v[0]}">${v[2]}<small>${v[1]}</small></div>`));
+g.onclick=e=>{let c=e.target.closest('.verb,.choice');if(!c||c.classList.contains('matched'))return;if(c.classList.contains('verb')){document.querySelectorAll('.verb').forEach(x=>x.classList.remove('selected'));c.classList.add('selected');selected=c;speak(c.dataset.v);return}if(!selected)return;total++;if(c.dataset.v===selected.dataset.v){score++;c.classList.add('matched','ok');selected.classList.add('matched','ok');speak(c.dataset.v);selected=null;done++;if(done===8)setTimeout(r2,700)}else{c.classList.add('bad');setTimeout(()=>c.classList.remove('bad'),500)}}}
+let vi=0;
+function r2(){setRound(2);vi=0;showConj()}
+function showConj(){let v=verbs[vi][0];main.innerHTML=`<section class="card"><div class="counter">${vi+1}/8</div><h2 class="title">2. Coniuga: ${v}</h2><div class="sub">Feili bütün şəxslər üzrə özün yaz.</div><div id="fields"></div><div id="fb"></div></section>`;let f=document.querySelector('#fields');persons.forEach((p,i)=>f.insertAdjacentHTML('beforeend',`<div class="conj"><label>${p}</label><input type="text" inputmode="text" enterkeyhint="${i===5?'done':'next'}" autocomplete="off" autocapitalize="none" data-i="${i}"></div>`));let ins=[...document.querySelectorAll('input')];setTimeout(()=>ins[0].focus(),100);ins.forEach((x,i)=>x.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();if(i<5)ins[i+1].focus();else checkConj(v,ins)}}))}
+function checkConj(v,ins){if(ins.some(x=>!x.value.trim())){let x=ins.find(x=>!x.value.trim());x.focus();return}let correct=forms[v],n=0;ins.forEach((x,i)=>{total++;if(norm(x.value)===correct[i]){score++;n++;x.classList.add('ok')}else{x.classList.add('bad')}});let fb=document.querySelector('#fb');fb.innerHTML=`<div class="feedback ${n===6?'good':'wrong'}">${n}/6 düzgün. <b>Düzgün hallanma:</b><br>${persons.map((p,i)=>p+' '+correct[i]).join(' · ')}</div>`;speak(correct.join(', '),()=>setTimeout(()=>{vi++;vi<8?showConj():r3()},450))}
+const tasks=[
+{az:'Mən dərsi bitirirəm.',v:'finire',p:0,best:'Io finisco la lezione.'},
+{az:'Sən italyanca başa düşürsən.',v:'capire',p:1,best:'Tu capisci italiano.'},
+{az:'O, qəhvəyə üstünlük verir.',v:'preferire',p:2,best:'Lei preferisce il caffè.'},
+{az:'Biz məktubu göndəririk.',v:'spedire',p:3,best:'Noi spediamo la lettera.'},
+{az:'Siz iki hissəni birləşdirirsiniz.',v:'unire',p:4,best:'Voi unite le due parti.'},
+{az:'Onlar otağı təmizləyirlər.',v:'pulire',p:5,best:'Loro puliscono la camera.'},
+{az:'Mən problemi aydınlaşdırıram.',v:'chiarire',p:0,best:'Io chiarisco il problema.'},
+{az:'Sən bir ev tikirsən.',v:'costruire',p:1,best:'Tu costruisci una casa.'},
+{az:'Marco işi bitirir.',v:'finire',p:2,best:'Marco finisce il lavoro.'},
+{az:'Anna sualı başa düşür.',v:'capire',p:2,best:'Anna capisce la domanda.'},
+{az:'Biz pizzaya üstünlük veririk.',v:'preferire',p:3,best:'Noi preferiamo la pizza.'},
+{az:'Onlar bağlamanı göndərirlər.',v:'spedire',p:5,best:'Loro spediscono il pacco.'},
+{az:'Mən iki sözü birləşdirirəm.',v:'unire',p:0,best:'Io unisco le due parole.'},
+{az:'Sən mətbəxi təmizləyirsən.',v:'pulire',p:1,best:'Tu pulisci la cucina.'},
+{az:'Müəllim qaydanı aydınlaşdırır.',v:'chiarire',p:2,best:'Il professore chiarisce la regola.'},
+{az:'Onlar yeni ev tikirlər.',v:'costruire',p:5,best:'Loro costruiscono una casa nuova.'}
+];let ti=0;
+function r3(){setRound(3);ti=0;showTask()}
+function showTask(){let t=tasks[ti];main.innerHTML=`<section class="card"><div class="counter">${ti+1}/${tasks.length}</div><h2 class="title">3. Scrivi in italiano</h2><div class="sub">Cümləni italyanca yaz. Əsas diqqət feilin düzgün hallanmasınadır.</div><div class="sentence">🇦🇿 ${t.az}</div><input id="ans" type="text" inputmode="text" enterkeyhint="done" autocomplete="off" autocapitalize="sentences" placeholder="Scrivi qui..."><div id="fb"></div></section>`;let a=document.querySelector('#ans');setTimeout(()=>a.focus(),100);a.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();checkSentence(a.value,t)}})}
+function checkSentence(s,t){if(!s.trim())return;total++;let required=forms[t.v][t.p],words=norm(s).split(' '),verbOK=words.includes(norm(required));let fb=document.querySelector('#fb');if(verbOK){score++;fb.innerHTML=`<div class="feedback good">✓ Feilin hallanması doğrudur. Cavab qəbul edildi.</div><div class="perfect"><b>Ən düzgün variant:</b><br>${t.best}</div>`;speak(t.best,()=>setTimeout(nextTask,650))}else{fb.innerHTML=`<div class="feedback wrong">Feilin hallanmasına bir də bax. 💡 <b>${t.v}</b> — bu şəxsdə hansı formadır?</div>`;document.querySelector('#ans').focus()}}
+function nextTask(){ti++;ti<tasks.length?showTask():finish()}
+function finish(){main.innerHTML=`<section class="card final"><div>🌱 Missione completata!</div><div class="score">${Math.round(score/total*100)}%</div><p>Hai completato tutti e tre i round.</p><button class="btn" onclick="location.reload()">↻ Yenidən başla</button></section>`}
+r1();
+</script></body></html>
