@@ -5,7 +5,7 @@ const main=document.querySelector('#main'),dots=[...document.querySelectorAll('.
 function norm(s){return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z ]/g,'').replace(/\s+/g,' ').trim()}
 function round(n){dots.forEach((d,i)=>d.classList.toggle('on',i===n-1))}
 const r1=[
-{pre:'Ciao! Piacere, io sono Joseph,',post:'ragazzo che studia italiano.',ans:'un',type:'red',opts:['un','una']},
+{pre:'Ciao! Piacere, io sono Joseph,',post:'ragazzo italiano.',ans:'un',type:'red',opts:['un','una']},
 {pre:'Io',post:'l’italiano a Firenze.',ans:'studio',type:'blue',opts:['studio','studi','studia','studiamo']},
 {pre:'Studio in',post:'scuola in centro.',ans:'una',type:'red',opts:['un','una']},
 {pre:'La scuola è molto bella e c’è anche',post:'bar.',ans:'un',type:'red',opts:['un','una']},
