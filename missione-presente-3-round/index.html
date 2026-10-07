@@ -5,13 +5,13 @@ const main=document.querySelector('#main'),dots=[...document.querySelectorAll('.
 function norm(s){return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z ]/g,'').replace(/\s+/g,' ').trim()}
 function round(n){dots.forEach((d,i)=>d.classList.toggle('on',i===n-1))}
 const r1=[
-{pre:'Ciao! Piacere, io sono Joseph,',post:'studente di italiano.',ans:'uno',type:'red',opts:['uno','un','una','un’']},
+{pre:'Ciao! Piacere, io sono Joseph,',post:'ragazzo che studia italiano.',ans:'un',type:'red',opts:['un','una']},
 {pre:'Io',post:'l’italiano a Firenze.',ans:'studio',type:'blue',opts:['studio','studi','studia','studiamo']},
-{pre:'Studio in',post:'scuola in centro.',ans:'una',type:'red',opts:['un','uno','una','un’']},
-{pre:'La scuola è molto bella e c’è anche',post:'bar.',ans:'un',type:'red',opts:['uno','una','un','un’']},
+{pre:'Studio in',post:'scuola in centro.',ans:'una',type:'red',opts:['un','una']},
+{pre:'La scuola è molto bella e c’è anche',post:'bar.',ans:'un',type:'red',opts:['un','una']},
 {pre:'In classe noi',post:'sette studenti.',ans:'siamo',type:'blue',opts:['sono','siamo','siete','è']},
 {pre:'John e Nate',post:'due fratelli americani.',ans:'sono',type:'blue',opts:['siamo','siete','sono','è']},
-{pre:'Abbiamo',post:'insegnante molto simpatica, Marina.',ans:'un’',type:'red',opts:['un','uno','una','un’']},
+{pre:'Abbiamo',post:'professoressa molto simpatica, Marina.',ans:'una',type:'red',opts:['un','una']},
 {pre:'Lei',post:'italiana, di Napoli.',ans:'è',type:'blue',opts:['sono','sei','è','siamo']},
 {pre:'Noi',post:'tutti in centro.',ans:'abitiamo',type:'blue',opts:['abito','abiti','abita','abitiamo']}
 ];let i1=0;
@@ -25,7 +25,16 @@ const orders=[
 ['Lia','prende','il','treno','ogni','giorno','per','Milano']
 ];let i2=0,chosen=[];
 function startR2(){round(2);i2=0;showR2()}
-function showR2(){chosen=[];let correct=orders[i2],mix=[...correct].sort(()=>Math.random()-.5);main.innerHTML=`<section class="card"><div class="counter">${i2+1}/6</div><h2 class="title">2. Metti in ordine</h2><div class="sub">Sözlərə toxunaraq düzgün cümləni qur.</div><div class="answer" id="answer"></div><div class="build" id="pool"></div><div class="actions"><button class="btn alt" id="clear">↻ Təmizlə</button><button class="btn" id="check">Yoxla</button></div><div class="feedback" id="fb"></div></section>`;let pool=document.querySelector('#pool');mix.forEach((w,k)=>{let b=document.createElement('button');b.className='word';b.textContent=w;b.dataset.k=k;b.onclick=()=>{chosen.push({w,k});b.disabled=true;b.style.opacity=.35;renderAns()};pool.appendChild(b)});document.querySelector('#clear').onclick=showR2;document.querySelector('#check').onclick=()=>{if(chosen.length!==correct.length)return;total++;let s=chosen.map(x=>x.w).join(' '),c=correct.join(' ');if(norm(s)===norm(c)){score++;document.querySelector('#fb').innerHTML='<span class="good">✓ '+c+'</span>';setTimeout(()=>{i2++;i2<orders.length?showR2():startR3()},750)}else document.querySelector('#fb').innerHTML='<span class="wrong">Söz sırasına yenidən bax.</span>'}}
+function sameWords(a,b){let A=a.map(norm).sort(),B=b.map(norm).sort();return A.length===B.length&&A.every((x,i)=>x===B[i])}
+function meaningfulOrder(words,idx){let s=norm(words.join(' '));const tests=[
+ x=>x.includes('le scuole')&&x.includes('aprono')&&x.includes('alle'),
+ x=>x.includes('maria')&&x.includes('vittoria')&&x.includes('vivono')&&x.includes('roma')&&x.includes('centro'),
+ x=>x.includes('giacomo')&&x.includes('telefona')&&x.includes('luisa')&&x.includes('ogni sera'),
+ x=>x.includes('michela')&&x.includes('lavora')&&x.includes('giornale')&&x.includes('due anni'),
+ x=>x.includes('giulio')&&x.includes('non mangia')&&x.includes('ristorante'),
+ x=>x.includes('lia')&&x.includes('prende')&&x.includes('treno')&&x.includes('ogni giorno')&&x.includes('milano')
+ ];return tests[idx](s)}
+function showR2(){chosen=[];let correct=orders[i2],mix=[...correct].sort(()=>Math.random()-.5);main.innerHTML=`<section class="card"><div class="counter">${i2+1}/6</div><h2 class="title">2. Metti in ordine</h2><div class="sub">Sözlərə toxunaraq düzgün cümləni qur.</div><div class="answer" id="answer"></div><div class="build" id="pool"></div><div class="actions"><button class="btn alt" id="clear">↻ Təmizlə</button><button class="btn" id="check">Yoxla</button></div><div class="feedback" id="fb"></div></section>`;let pool=document.querySelector('#pool');mix.forEach((w,k)=>{let b=document.createElement('button');b.className='word';b.textContent=w;b.dataset.k=k;b.onclick=()=>{chosen.push({w,k});b.disabled=true;b.style.opacity=.35;renderAns()};pool.appendChild(b)});document.querySelector('#clear').onclick=showR2;document.querySelector('#check').onclick=()=>{if(chosen.length!==correct.length)return;total++;let words=chosen.map(x=>x.w),s=words.join(' '),c=correct.join(' ');if(sameWords(words,correct)&&meaningfulOrder(words,i2)){score++;document.querySelector('#fb').innerHTML='<span class="good">✓ Düzgün fikir!<br><small>Mümkün variant: '+c+'</small></span>';setTimeout(()=>{i2++;i2<orders.length?showR2():startR3()},750)}else document.querySelector('#fb').innerHTML='<span class="wrong">Söz sırasına yenidən bax.</span>'}}
 function renderAns(){document.querySelector('#answer').innerHTML=chosen.map(x=>`<span class="word">${x.w}</span>`).join('')}
 const qs=[
 {a:'come',tail:'ti chiami?',full:'Ciao, come ti chiami?'},
