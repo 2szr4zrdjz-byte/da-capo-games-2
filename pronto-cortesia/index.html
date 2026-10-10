@@ -32,7 +32,8 @@ function acceptable(value,answer,isSentence){
  ];
  const valid=variants[idx]||[];
  if(valid.includes(v))return true;
- if(idx===3){const intro=["prego","ecco","ecco qui","ecco a lei","prego ecco","prego ecco qui","prego ecco a lei","ecco prego"];const ending=["questo e il suo caffe","questo e il tuo caffe","questo e il vostro caffe","ecco il suo caffe","ecco il tuo caffe","ecco il vostro caffe","il suo caffe","il tuo caffe","il vostro caffe","il caffe","qui il suo caffe","qui il caffe","a lei il suo caffe"];if(intro.some(x=>v.startsWith(x+" "))&&ending.some(x=>v.endsWith(x)))return true;}\n if(idx===7){
+ if(idx===3){const intro=["prego","ecco","ecco qui","ecco a lei","prego ecco","prego ecco qui","prego ecco a lei","ecco prego"];const ending=["questo e il suo caffe","questo e il tuo caffe","questo e il vostro caffe","ecco il suo caffe","ecco il tuo caffe","ecco il vostro caffe","il suo caffe","il tuo caffe","il vostro caffe","il caffe","qui il suo caffe","qui il caffe","a lei il suo caffe"];if(intro.some(x=>v.startsWith(x+" "))&&ending.some(x=>v.endsWith(x)))return true;}
+ if(idx===7){
    const first=["non c'e di che","di niente","figurati","nessun problema"];
    const second=["va tutto bene","tutto a posto","nessun problema","non c'e problema","non ci sono problemi","va bene","tutto ok","e tutto ok","non ti preoccupare","non preoccuparti","tranquillo","tranquilla"];
    return first.some(x=>v.startsWith(x+" "))&&second.some(x=>v.endsWith(x));
