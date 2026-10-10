@@ -22,7 +22,7 @@ function acceptable(value,answer,isSentence){
  ["aiutami per favore","per favore aiutami","mi aiuti per favore","puoi aiutarmi per favore","potresti aiutarmi per favore"],
  ["grazie marco","marco grazie","ti ringrazio marco"],
  ["grazie mille per il regalo","grazie di cuore per il regalo","grazie tantissimo per il regalo","ti ringrazio tanto per il regalo"],
- ["prego questo e il suo caffe","prego ecco il suo caffe","prego questo e il caffe","prego ecco il caffe"],
+ ["prego questo e il suo caffe","prego ecco il suo caffe","prego questo e il caffe","prego ecco il caffe","prego ecco a lei il caffe","prego ecco a lei il suo caffe","prego questo e il vostro caffe","prego ecco il vostro caffe","prego ecco il tuo caffe","prego questo e il tuo caffe","prego le porto il caffe","prego ecco qui il suo caffe","ecco il suo caffe prego","ecco il suo caffe","ecco a lei il suo caffe","ecco il caffe prego","prego il suo caffe","prego ecco qui il caffe"],
  ["scusa anna","anna scusa","scusami anna","anna scusami"],
  ["scusi dov e la stazione","scusi dove si trova la stazione","mi scusi dov e la stazione","mi scusi dove si trova la stazione"],
  ["mi dispiace paolo","paolo mi dispiace","sono dispiaciuto paolo","sono dispiaciuta paolo"],
@@ -32,7 +32,7 @@ function acceptable(value,answer,isSentence){
  ];
  const valid=variants[idx]||[];
  if(valid.includes(v))return true;
- if(idx===7){
+ if(idx===3){const intro=["prego","ecco","ecco qui","ecco a lei","prego ecco","prego ecco qui","prego ecco a lei","ecco prego"];const ending=["questo e il suo caffe","questo e il tuo caffe","questo e il vostro caffe","ecco il suo caffe","ecco il tuo caffe","ecco il vostro caffe","il suo caffe","il tuo caffe","il vostro caffe","il caffe","qui il suo caffe","qui il caffe","a lei il suo caffe"];if(intro.some(x=>v.startsWith(x+" "))&&ending.some(x=>v.endsWith(x)))return true;}\n if(idx===7){
    const first=["non c'e di che","di niente","figurati","nessun problema"];
    const second=["va tutto bene","tutto a posto","nessun problema","non c'e problema","non ci sono problemi","va bene","tutto ok","e tutto ok","non ti preoccupare","non preoccuparti","tranquillo","tranquilla"];
    return first.some(x=>v.startsWith(x+" "))&&second.some(x=>v.endsWith(x));
